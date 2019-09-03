@@ -54,3 +54,8 @@ Gemfile.lock
 npm-debug.log
 newrelic_agent.log
 mocha.json
+
+# Other
+examples.js
+testing.js
+.nvmrc
