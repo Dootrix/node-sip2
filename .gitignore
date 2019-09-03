@@ -56,6 +56,7 @@ newrelic_agent.log
 mocha.json
 
 # Other
-examples.js
 testing.js
+examples.js
+variablesForExamples.js
 .nvmrc
