@@ -10,9 +10,9 @@ const SIP2 = require('./index');
 const Connection = SIP2.Connection;
 
 // Variables
-const variablesForExamples = require('./variablesForExamples');
-const serverIP = variablesForExamples.serverIP;
-const serverPort = variablesForExamples.serverPort;
+const exampleVariables = require('./exampleVariables');
+const serverIP = exampleVariables.serverIP;
+const serverPort = exampleVariables.serverPort;
 
 const sip2connection = new Connection(serverIP, serverPort);
 
@@ -23,10 +23,18 @@ const connect = async () => {
     await sip2connection.connect();
 }
 
+/**
+ *  Disconnect
+ */
+const disconnect = async () => {
+    await sip2connection.close();
+}
+
 /** 
  * Login Request
  */
 const requestLogin = async (user, pass, institutionId) => {
+    console.log('Logging in...');
     const loginRequest = new SIP2.LoginRequest(user, pass, institutionId);
     loginRequest.sequence = 1;
     return await sip2connection.send(loginRequest.getMessage());
@@ -36,6 +44,7 @@ const requestLogin = async (user, pass, institutionId) => {
  * Patron Information Request
  */
 const requestPatronInformation = async (patronID, patronPassword, institutionId, terminalPassword, requestType = 'charged') => {
+    console.log('Requesting Patron Information...')
     const patronInformationRequest = new SIP2.PatronInformationRequest(requestType);
     patronInformationRequest.sequence = 2;
     patronInformationRequest.institutionId = institutionId;
@@ -51,6 +60,8 @@ const requestPatronInformation = async (patronID, patronPassword, institutionId,
 const requestCheckout = async (itemID, patronID) => {
     const checkoutRequest = new SIP2.CheckoutRequest('Y', '20190929    000000', itemID, null, 'N');
     checkoutRequest.patronIdentifier = patronID;
+    checkoutRequest.institutionId = exampleVariables.institutionID;
+    checkoutRequest.terminalPassword = exampleVariables.terminalPassword;
     return await sip2connection.send(checkoutRequest.getMessage());
 }
 
@@ -66,6 +77,7 @@ const requestCheckin = async (itemID, institutionId) => {
  * SC Status
  */
 const requestSCStatus = async (statusCode = '1', maxPrintWidth = '000', protocolVersion = '2.00') => {
+    console.log('SC Status...')
     const scStatusRequest = new SIP2.SCStatusRequest(statusCode, maxPrintWidth, protocolVersion);
     return await sip2connection.send(scStatusRequest.getMessage());
 }
@@ -73,6 +85,7 @@ const requestSCStatus = async (statusCode = '1', maxPrintWidth = '000', protocol
 /** Request ACS Resend
  */
 const requestACSResend = async () => {
+    console.log('Resend');
     const acsResendrequest = new SIP2.RequestResendRequest();
     return await sip2connection.send(acsResendrequest.getMessage());
 }
@@ -81,6 +94,7 @@ const requestACSResend = async () => {
  * Fee Paid
  */
 const requestFeePaid = async (patronID, institutionId, feeAmount) => {
+    console.log('Requesting fee paid...');
     const feePaidRequest = new SIP2.FeePaidRequest('01', '00', 'GBP', feeAmount);
     feePaidRequest.institutionId = institutionId;
     feePaidRequest.patronIdentifier = patronID;
@@ -90,6 +104,7 @@ const requestFeePaid = async (patronID, institutionId, feeAmount) => {
 /** Item Information
  */
 const requestItemInformation = async (itemID) => {
+    console.log('Requesting item information...');
     const itemInformationRequest = new SIP2.ItemInformationRequest(itemID);
     return await sip2connection.send(itemInformationRequest.getMessage());
 }
@@ -98,6 +113,7 @@ const requestItemInformation = async (itemID) => {
  * Renew
  */
 const requestRenew = async (patronID, itemID, institutionId, patronPassword) => {
+    console.log('Requesting single renew...');
     const renewRequest = new SIP2.RenewRequest(institutionId, patronID, patronPassword, '20190910    000000', itemID);
     return await sip2connection.send(renewRequest.getMessage());
 }
@@ -106,14 +122,8 @@ const requestRenew = async (patronID, itemID, institutionId, patronPassword) => 
  * Renew All
  */
 const requestRenewAll = async (patronID, institutionId) => {
+    console.log('Requesting renew all...');
     const renewAllRequest = new SIP2.RenewAllRequest(patronID, institutionId);
     return await sip2connection.send(renewAllRequest.getMessage());
 }
-```
-
-## Tests
-To run the test suite, first install the dependencies then run `npm test`:
-```bash
-$ npm install
-$ npm test
 ```

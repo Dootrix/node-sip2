@@ -58,5 +58,5 @@ mocha.json
 # Other
 testing.js
 examples.js
-variablesForExamples.js
+exampleVariables.js
 .nvmrc
