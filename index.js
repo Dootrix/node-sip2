@@ -48,6 +48,9 @@ const StatusCode = require('./lib/variables/StatusCode');
 const Summary = require('./lib/variables/Summary');
 const SupportedMessages = require('./lib/variables/SupportedMessages');
 
+// Types
+const types = require('./lib/types');
+
 
 module.exports = {
   Connection,
@@ -89,4 +92,5 @@ module.exports = {
   StatusCode,
   Summary,
   SupportedMessages,
+  types,
 };
