@@ -15,7 +15,6 @@ const CheckoutRequest = require('./lib/requests/Checkout');
 const CheckinRequest = require('./lib/requests/Checkin');
 const FeePaidRequest = require('./lib/requests/FeePaid');
 const EndPatronSessionRequest = require('./lib/requests/EndPatronSession');
-// Custom Requests
 const RenewRequest = require('./lib/requests/Renew');
 const RenewAllRequest = require('./lib/requests/RenewAll');
 
@@ -30,7 +29,6 @@ const PatronEnableResponse = require('./lib/responses/PatronEnable');
 const PatronInformationResponse = require('./lib/responses/PatronInformation');
 const PatronStatusResponse = require('./lib/responses/PatronStatus');
 const ACStatusResponse = require('./lib/responses/ACStatus');
-// Custom Requests
 const RenewResponse = require('./lib/responses/Renew');
 const RenewAllResponse = require('./lib/responses/RenewAll');
 
